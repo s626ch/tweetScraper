@@ -1,5 +1,6 @@
 # tweetScraper
-simple tweet info scraper, takes urls
+simple tweet info scraper, takes urls.
+scrapes nitter for tweet info, uses ssstwitter for video urls.
 
 ## requirements
 selenium, shutup
