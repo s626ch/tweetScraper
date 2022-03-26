@@ -53,7 +53,10 @@ else:
             print(f"Tweet author: {authname} - {authhandle}")
         tweettext = driver.find_element_by_xpath("//*[@id='m']/div/div/div[@class='tweet-content media-body']").text
         tweetedat = driver.find_element_by_xpath("//*[@id='m']/div/div/p[@class='tweet-published']").text
-        print(tweettext)
+        if tweettext != "":
+            print(tweettext)
+        else: 
+            pass
         print(f"Tweeted: {tweetedat}")
         # try to grab all images
         try:
@@ -64,14 +67,14 @@ else:
         except:
             pass
         # try to grab video
-        if driver.find_elements_by_xpath("//*[@id='m']/div/div/div[3]/div[@class='gallery-video']/div[@class='attachment video-container']/video"):
+        if driver.find_elements_by_xpath("//*[@id='m']/div/div/div[@class='attachments card']/div[@class='gallery-video']/div[@class='attachment video-container']/video"):
             # this is going to open a new tab, using a download service, to get the video url, since nitter uses blob storage (cringe)
             sssurl = tweeturl.replace("https://twitter.com/", "https://ssstwitter.com/")
             driver.execute_script("window.open('');") # open new tab
             driver.switch_to.window(driver.window_handles[1]) # switch to new tab
             driver.get(sssurl) # go to page
             time.sleep(2) # this is needed so it doesn't scream if it can't instantly find the button, because...it does that.
-            # driver.find_element_by_tag_name('html').screenshot('web_screenshot.png') #? this was needed to figure out why the page wouldn't properly load, turns out it was a UA issue
+            #driver.find_element_by_tag_name('html').screenshot('web_screenshot.png') #? this was needed to figure out why the page wouldn't properly load, turns out it was a UA issue
             videourl = driver.find_element_by_xpath("//*[@id='mainpicture']/div/a[3]").get_attribute("href") # grab video url
             driver.close() # close current tab with video
             driver.switch_to.window(driver.window_handles[0]) # switch back to main tab
